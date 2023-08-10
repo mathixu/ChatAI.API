@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ChatAI.API.Filters;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -11,9 +12,11 @@ namespace ChatAI.API.Controllers;
 public abstract class BaseAPIController : ControllerBase
 {
     protected readonly IMapper _mapper;
+    protected readonly IMediator _mediator;
 
-    public BaseAPIController(IMapper mapper)
+    public BaseAPIController(IMediator mediator, IMapper mapper)
     {
+        _mediator = mediator;
         _mapper = mapper;
     }
 

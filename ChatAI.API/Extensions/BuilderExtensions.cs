@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using ChatAI.API.Mappings;
-using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
+using ChatAI.Infrastructure;
+using System.Reflection;
 
 namespace ChatAI.API.Extensions;
 
@@ -14,24 +13,12 @@ public static class BuilderExtensions
         builder.Services.ConfigureAPI();
         builder.Services.ConfigureSwagger();
         builder.Services.ConfigureCors();
-        builder.Services.ConfigureMapper();
+        builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
         //builder.Services.AddApplicationServices();
-        //builder.Services.AddInfrastructureServices(builder.Configuration);
+        builder.Services.AddInfrastructureServices(builder.Configuration);
         //builder.Services.ConfigureBearer();
-    }
 
-    private static void ConfigureMapper(this IServiceCollection services)
-    {
-        var mapperConfig = new MapperConfiguration(mc =>
-        {
-            mc.AddProfile(new GlobalProfile());
-            mc.AddProfile(new RequestsProfile());
-            mc.AddProfile(new ResponsesProfile());
-        });
-
-        var mapper = mapperConfig.CreateMapper();
-        services.AddSingleton(mapper);
     }
 
     private static void ConfigureAPI(this IServiceCollection services)
@@ -97,7 +84,6 @@ public static class BuilderExtensions
 
     private static void ConfigureDependancies(this IServiceCollection services)
     {
-        //services.AddTransient<HabitRequestValidator>();
     }
 
     private static void ConfigureOptions(this IServiceCollection services)
