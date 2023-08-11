@@ -1,7 +1,14 @@
-﻿using AutoMapper;
-using ChatAI.API.Mappings;
+﻿using ChatAI.API.OptionsSetup;
+using ChatAI.Infrastructure;
+using ChatAI.Application;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
+using ChatAI.Infrastructure.Options;
+using ChatAI.Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ChatAI.API.Extensions;
 
@@ -10,28 +17,15 @@ public static class BuilderExtensions
     public static void Configure(this WebApplicationBuilder builder)
     {
         builder.Services.ConfigureOptions();
-        builder.Services.ConfigureDependancies();
         builder.Services.ConfigureAPI();
         builder.Services.ConfigureSwagger();
         builder.Services.ConfigureCors();
-        builder.Services.ConfigureMapper();
+        builder.Services.ConfigureAuthorization();
 
-        //builder.Services.AddApplicationServices();
-        //builder.Services.AddInfrastructureServices(builder.Configuration);
-        //builder.Services.ConfigureBearer();
-    }
-
-    private static void ConfigureMapper(this IServiceCollection services)
-    {
-        var mapperConfig = new MapperConfiguration(mc =>
-        {
-            mc.AddProfile(new GlobalProfile());
-            mc.AddProfile(new RequestsProfile());
-            mc.AddProfile(new ResponsesProfile());
-        });
-
-        var mapper = mapperConfig.CreateMapper();
-        services.AddSingleton(mapper);
+        builder.Services.AddHttpContextAccessor();
+        builder.Services.AddApplicationServices();
+        builder.Services.AddInfrastructureServices(builder.Configuration);
+        builder.Services.ConfigureBearer();
     }
 
     private static void ConfigureAPI(this IServiceCollection services)
@@ -39,7 +33,7 @@ public static class BuilderExtensions
         services.AddControllers();
     }
 
-    /*private static void ConfigureBearer(this IServiceCollection services)
+    private static void ConfigureBearer(this IServiceCollection services)
     {
         var jwtOptions = services.BuildServiceProvider().GetRequiredService<IOptions<JwtOptions>>().Value ?? throw new ArgumentNullException("JwtOptions");
 
@@ -64,14 +58,14 @@ public static class BuilderExtensions
                 ClockSkew = TimeSpan.Zero,
             };
         });
-    }*/
+    }
 
     private static void ConfigureSwagger(this IServiceCollection services)
     {
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 
-        /*services.AddSwaggerGen(setup =>
+        services.AddSwaggerGen(setup =>
         {
             var jwtSecurityScheme = new OpenApiSecurityScheme
             {
@@ -92,18 +86,14 @@ public static class BuilderExtensions
             setup.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
 
             setup.AddSecurityRequirement(new OpenApiSecurityRequirement { { jwtSecurityScheme, Array.Empty<string>() } });
-        });*/
-    }
-
-    private static void ConfigureDependancies(this IServiceCollection services)
-    {
-        //services.AddTransient<HabitRequestValidator>();
+        });
     }
 
     private static void ConfigureOptions(this IServiceCollection services)
     {
-        /*services.ConfigureOptions<JwtOptionsSetup>();
-        services.ConfigureOptions<RefreshTokenOptionsSetup>();*/
+        services.ConfigureOptions<JwtOptionsSetup>();
+        services.ConfigureOptions<RefreshTokenOptionsSetup>();
+        services.ConfigureOptions<SmtpOptionsSetup>();
     }
 
     private static void ConfigureCors(this IServiceCollection services)
@@ -118,6 +108,20 @@ public static class BuilderExtensions
                         .AllowAnyMethod()
                         .AllowAnyHeader();
                 });
+        });
+    }
+
+    private static void ConfigureAuthorization(this IServiceCollection services)
+    {
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("ResetPassword", pol =>
+                pol.RequireClaim("purpose", JwtType.PasswordResetToken.ToString()));
+
+            options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .RequireClaim("purpose", JwtType.AccessToken.ToString())
+                .Build();
         });
     }
 }

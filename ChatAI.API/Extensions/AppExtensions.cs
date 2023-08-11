@@ -1,4 +1,6 @@
-﻿namespace ChatAI.API.Extensions;
+﻿using ChatAI.Infrastructure.Persistence;
+
+namespace ChatAI.API.Extensions;
 
 public static class AppExtensions
 {
@@ -38,10 +40,8 @@ public static class AppExtensions
     
     private static async Task MigrateDatabase(this WebApplication app)
     {
-        /*using (var scope = app.Services.CreateScope())
-        {
-            var initialiser = scope.ServiceProvider.GetRequiredService<HabitsDbContextInitializer>();
-            await initialiser.InitialiseAsync();
-        }*/
+        using var scope = app.Services.CreateScope();
+        var initialiser = scope.ServiceProvider.GetRequiredService<ChatAIDbContextInitializer>();
+        await initialiser.InitializeAsync();
     }
 }
