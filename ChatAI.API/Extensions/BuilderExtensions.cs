@@ -1,18 +1,14 @@
 ﻿using ChatAI.API.OptionsSetup;
-using ChatAI.Application.Handlers.Auth;
-using ChatAI.Application.Validators;
 using ChatAI.Infrastructure;
 using ChatAI.Application;
-using ChatAI.Infrastructure.Authentication;
-using ChatAI.Infrastructure.Services;
-using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Reflection;
 using System.Text;
+using ChatAI.Infrastructure.Options;
+using ChatAI.Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ChatAI.API.Extensions;
 
@@ -21,11 +17,12 @@ public static class BuilderExtensions
     public static void Configure(this WebApplicationBuilder builder)
     {
         builder.Services.ConfigureOptions();
-        builder.Services.ConfigureDependancies();
         builder.Services.ConfigureAPI();
         builder.Services.ConfigureSwagger();
         builder.Services.ConfigureCors();
+        builder.Services.ConfigureAuthorization();
 
+        builder.Services.AddHttpContextAccessor();
         builder.Services.AddApplicationServices();
         builder.Services.AddInfrastructureServices(builder.Configuration);
         builder.Services.ConfigureBearer();
@@ -92,16 +89,11 @@ public static class BuilderExtensions
         });
     }
 
-    private static void ConfigureDependancies(this IServiceCollection services)
-    {
-        services.AddTransient<LoginCommandValidator>();
-        services.AddTransient<SignUpCommandValidator>();
-    }
-
     private static void ConfigureOptions(this IServiceCollection services)
     {
         services.ConfigureOptions<JwtOptionsSetup>();
-        //services.ConfigureOptions<RefreshTokenOptionsSetup>();
+        services.ConfigureOptions<RefreshTokenOptionsSetup>();
+        services.ConfigureOptions<SmtpOptionsSetup>();
     }
 
     private static void ConfigureCors(this IServiceCollection services)
@@ -116,6 +108,20 @@ public static class BuilderExtensions
                         .AllowAnyMethod()
                         .AllowAnyHeader();
                 });
+        });
+    }
+
+    private static void ConfigureAuthorization(this IServiceCollection services)
+    {
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("ResetPassword", pol =>
+                pol.RequireClaim("purpose", JwtType.PasswordResetToken.ToString()));
+
+            options.DefaultPolicy = new AuthorizationPolicyBuilder()
+                .RequireAuthenticatedUser()
+                .RequireClaim("purpose", JwtType.AccessToken.ToString())
+                .Build();
         });
     }
 }

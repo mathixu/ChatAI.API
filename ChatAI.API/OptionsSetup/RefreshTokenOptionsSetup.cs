@@ -3,17 +3,17 @@ using Microsoft.Extensions.Options;
 
 namespace ChatAI.API.OptionsSetup;
 
-public class JwtOptionsSetup : IConfigureOptions<JwtOptions>
+public class RefreshTokenOptionsSetup : IConfigureOptions<RefreshTokenOptions>
 {
-    private const string SectionName = "Jwt";
+    private const string SectionName = "RefreshToken";
     private readonly IConfiguration _configuration;
 
-    public JwtOptionsSetup(IConfiguration configuration)
+    public RefreshTokenOptionsSetup(IConfiguration configuration)
     {
         _configuration = configuration;
     }
 
-    public void Configure(JwtOptions options)
+    public void Configure(RefreshTokenOptions options)
     {
         _configuration.GetSection(SectionName).Bind(options);
     }

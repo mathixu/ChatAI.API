@@ -26,10 +26,13 @@ public static class ConfigureServices
 
         services.AddScoped<ChatAIDbContextInitializer>();
 
-        services.AddTransient<IDateTime, DateTimeService>();
+        services.AddTransient<IDateTime, DateTimeService>(); 
+        services.AddTransient<ICurrentUserService, CurrentUserService>();
+        services.AddTransient<IEmailService, EmailService>();
+
         services.AddScoped<IHashService, HashService>();
         services.AddScoped<IJwtProvider, JwtProvider>();
-        //services.AddScoped<IRefreshTokenProvider, RefreshTokenProvider>();
+        services.AddScoped<IRefreshTokenProvider, RefreshTokenProvider>();
         
         return services;
     }

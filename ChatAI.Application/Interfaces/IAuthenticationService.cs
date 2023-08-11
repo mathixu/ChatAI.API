@@ -1,5 +1,5 @@
-﻿using ChatAI.Application.Commands.Auth;
-using ChatAI.Domain.Entities;
+﻿using ChatAI.Domain.Entities;
+using ChatAI.Application.Authentication.DTOs;
 
 namespace ChatAI.Application.Interfaces;
 

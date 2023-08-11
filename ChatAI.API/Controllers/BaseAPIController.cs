@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using ChatAI.API.Filters;
+﻿using ChatAI.API.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace ChatAI.API.Controllers;
 
@@ -16,20 +14,5 @@ public abstract class BaseAPIController : ControllerBase
     public BaseAPIController(IMediator mediator)
     {
         _mediator = mediator;
-    }
-
-    protected Guid UserId
-    {
-        get
-        {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            if (userId == null || !Guid.TryParse(userId, out var userIdGuid))
-            {
-                throw new UnauthorizedAccessException();
-            }
-
-            return userIdGuid;
-        }
     }
 }

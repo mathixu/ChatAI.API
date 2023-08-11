@@ -1,6 +1,7 @@
-﻿using MediatR;
+﻿using ChatAI.Application.Authentication.DTOs;
+using MediatR;
 
-namespace ChatAI.Application.Commands.Auth;
+namespace ChatAI.Application.Authentication.Commands.Login;
 
 public class LoginCommand : IRequest<LoginResponse>
 {

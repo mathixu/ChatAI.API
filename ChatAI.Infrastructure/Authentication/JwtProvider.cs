@@ -1,6 +1,7 @@
 ﻿using ChatAI.Application.Interfaces;
 using ChatAI.Domain.Entities;
 using ChatAI.Domain.Enums;
+using ChatAI.Infrastructure.Options;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -20,34 +21,33 @@ public class JwtProvider : IJwtProvider
         _jwtOptions = jwtOptions.Value;
     }
 
-
     public string Generate(User user, JwtType type)
     {
-        switch (type)
+        var claims = GetClaims(user, type);
+
+        var expireInMinutes = type switch
         {
-            case JwtType.AccessToken:
-                return GenerateAccessToken(user);
-            case JwtType.PasswordResetToken:
-                return GeneratePasswordResetToken(user);
-            default:
-                throw new ArgumentException($"Invalid value for {nameof(JwtType)}");
-        }
+            JwtType.AccessToken => _jwtOptions.AccessTokenExpireInMinutes,
+            JwtType.PasswordResetToken => _jwtOptions.ResetPasswordTokenExpireInMinutes,
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+        };
+
+        return WriteToken(claims, expireInMinutes);
     }
 
-    private string GenerateAccessToken(User user)
+    private string WriteToken(Claim[] claims, int expireInMinutes)
     {
-        var claims = GetAccessTokenClaims(user);
-
         var signingCredentials = new SigningCredentials(
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.SecretKey)),
             SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-            _jwtOptions.Issuer,
-            _jwtOptions.Audience,
-            claims,
-            _dateTime.Now,
-            _dateTime.Now.AddMinutes(_jwtOptions.ExpireInMinutes),
+                _jwtOptions.Issuer,
+                _jwtOptions.Audience,
+                claims,
+                _dateTime.Now,
+                _dateTime.Now.AddMinutes(expireInMinutes
+            ),
             signingCredentials
         );
 
@@ -56,19 +56,14 @@ public class JwtProvider : IJwtProvider
         return tokenValue;
     }
 
-    private Claim[] GetAccessTokenClaims(User user)
+    private Claim[] GetClaims(User user, JwtType type)
     {
         return new Claim[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Email, user.Email),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new Claim("purpose", type.ToString())
         };
     }
-
-    private string GeneratePasswordResetToken(User user)
-    {
-        throw new NotImplementedException();
-    }
-
 }

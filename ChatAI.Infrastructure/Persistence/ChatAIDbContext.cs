@@ -9,6 +9,8 @@ public class ChatAIDbContext : DbContext
     private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;
 
     public DbSet<User> Users { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
+    public DbSet<ResetPasswordToken> ResetPasswordTokens { get; set; }
 
     public ChatAIDbContext(DbContextOptions<ChatAIDbContext> options, AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor) : base(options)
     {

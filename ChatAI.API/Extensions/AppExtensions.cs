@@ -40,10 +40,8 @@ public static class AppExtensions
     
     private static async Task MigrateDatabase(this WebApplication app)
     {
-        using (var scope = app.Services.CreateScope())
-        {
-            var initialiser = scope.ServiceProvider.GetRequiredService<ChatAIDbContextInitializer>();
-            await initialiser.InitializeAsync();
-        }
+        using var scope = app.Services.CreateScope();
+        var initialiser = scope.ServiceProvider.GetRequiredService<ChatAIDbContextInitializer>();
+        await initialiser.InitializeAsync();
     }
 }

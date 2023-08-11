@@ -1,8 +1,14 @@
 ﻿using AutoMapper;
+using ChatAI.Application.Account.Commands.AddOpenAIToken;
+using ChatAI.Application.Account.Commands.DeleteMyAccount;
+using ChatAI.Application.Authentication.Commands.Login;
+using ChatAI.Application.Authentication.Commands.Refresh;
+using ChatAI.Application.Authentication.Commands.RequestPasswordReset;
+using ChatAI.Application.Authentication.Commands.ResetPassword;
+using ChatAI.Application.Authentication.Commands.SignUp;
 using ChatAI.Application.Interfaces;
 using ChatAI.Application.Mappings;
 using ChatAI.Application.Services;
-using ChatAI.Application.Validators;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -26,6 +32,13 @@ public static class ConfigureServices
     private static void ConfigureDependancies(this IServiceCollection services)
     {
         services.AddScoped<IAuthenticationService, AuthenticationService>();
+        services.AddTransient<LoginCommandValidator>();
+        services.AddTransient<SignUpCommandValidator>();
+        services.AddTransient<AddOpenAITokenCommandValidator>();
+        services.AddTransient<RefreshCommandValidator>();
+        services.AddTransient<RequestPasswordResetCommandValidator>();
+        services.AddTransient<ResetPasswordCommandValidator>();
+        services.AddTransient<DeleteMyAccountCommandValidator>();
     }
 
     private static void ConfigureMapper(this IServiceCollection services)

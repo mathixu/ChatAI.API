@@ -1,7 +1,6 @@
-﻿using ChatAI.Application.Commands.Auth;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace ChatAI.Application.Validators;
+namespace ChatAI.Application.Authentication.Commands.Login;
 
 public class LoginCommandValidator : AbstractValidator<LoginCommand>
 {

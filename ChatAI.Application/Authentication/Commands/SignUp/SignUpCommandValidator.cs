@@ -1,7 +1,6 @@
-﻿using ChatAI.Application.Commands.Auth;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace ChatAI.Application.Validators;
+namespace ChatAI.Application.Authentication.Commands.SignUp;
 
 public class SignUpCommandValidator : AbstractValidator<SignUpCommand>
 {
@@ -21,7 +20,6 @@ public class SignUpCommandValidator : AbstractValidator<SignUpCommand>
             .MaximumLength(200)
             .Matches("[A-Z]")
             .Matches("[a-z]")
-            .Matches("[0-9]")
-            .Matches("[^a-zA-Z0-9]");
+            .Matches("[0-9]");
     }
 }

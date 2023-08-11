@@ -19,5 +19,15 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(t => t.OpenAIToken)
             .HasMaxLength(200)
             .IsRequired(false);
+
+        builder.HasMany(t => t.RefreshTokens)
+            .WithOne(t => t.User)
+            .HasForeignKey(t => t.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(t => t.ResetPasswordTokens)
+            .WithOne(t => t.User)
+            .HasForeignKey(t => t.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

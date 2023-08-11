@@ -1,9 +1,10 @@
-﻿using ChatAI.Application.Commands.Auth;
-using ChatAI.Application.Interfaces;
+﻿using ChatAI.Application.Interfaces;
 using ChatAI.Domain.Entities;
 using MediatR;
+using ChatAI.Application.Authentication.DTOs;
+using ChatAI.Application.Authentication.Commands.Login;
 
-namespace ChatAI.Application.Handlers.Auth;
+namespace ChatAI.Application.Authentication.Handlers;
 
 public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
 {
@@ -20,12 +21,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
 
     public async Task<LoginResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
-        var user = await _userRepository.Get(u => u.Email == request.Email);
-
-        if (user is null)
-        {
-            throw new UnauthorizedAccessException();
-        }
+        var user = await _userRepository.Get(u => u.Email == request.Email) ?? throw new UnauthorizedAccessException();
 
         if (!_hashService.Verify(request.Password, user.HashedPassword))
         {
