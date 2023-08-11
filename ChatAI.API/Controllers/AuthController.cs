@@ -35,7 +35,7 @@ public class AuthController : BaseAPIController
     {
         var result = await _mediator.Send(signUpCommand);
 
-        return CreatedAtAction(nameof(Login), new { result.Email }, result);
+        return StatusCode(StatusCodes.Status201Created, result);
     }
 
     [HttpPost("refresh")]
