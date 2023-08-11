@@ -1,4 +1,5 @@
 ﻿using ChatAI.Application.Interfaces;
+using ChatAI.Infrastructure.Authentication;
 using ChatAI.Infrastructure.Persistence;
 using ChatAI.Infrastructure.Persistence.Interceptors;
 using ChatAI.Infrastructure.Persistence.Repositories;
@@ -27,7 +28,7 @@ public static class ConfigureServices
 
         services.AddTransient<IDateTime, DateTimeService>();
         services.AddScoped<IHashService, HashService>();
-        //services.AddScoped<IJwtProvider, JwtProvider>();
+        services.AddScoped<IJwtProvider, JwtProvider>();
         //services.AddScoped<IRefreshTokenProvider, RefreshTokenProvider>();
         
         return services;

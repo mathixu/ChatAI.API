@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using ChatAI.Application.Interfaces;
 using ChatAI.Application.Mappings;
+using ChatAI.Application.Services;
 using ChatAI.Application.Validators;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace ChatAI.Application;
 
@@ -12,13 +15,17 @@ public static class ConfigureServices
         services.ConfigureDependancies();
         services.ConfigureMapper();
 
+        services.AddMediatR(cfg =>
+        {
+            cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly());
+        });
+
         return services;
     }
 
     private static void ConfigureDependancies(this IServiceCollection services)
     {
-        services.AddTransient<LoginCommandValidator>();
-        services.AddTransient<SignUpCommandValidator>();
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
     }
 
     private static void ConfigureMapper(this IServiceCollection services)

@@ -9,11 +9,13 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
 {
     private readonly IBaseRepository<User> _userRepository;
     private readonly IHashService _hashService;
+    private readonly IAuthenticationService _authenticationService;
 
-    public LoginCommandHandler(IBaseRepository<User> userRepository, IHashService hashService)
+    public LoginCommandHandler(IBaseRepository<User> userRepository, IHashService hashService, IAuthenticationService authenticationService)
     {
         _userRepository = userRepository;
         _hashService = hashService;
+        _authenticationService = authenticationService;
     }
 
     public async Task<LoginResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
@@ -30,6 +32,6 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
             throw new UnauthorizedAccessException();
         }
 
-        return new LoginResponse();
+        return await _authenticationService.GenerateUserAuthenticationTokens(user);
     }
 }

@@ -10,7 +10,7 @@ namespace ChatAI.API.Controllers;
 
 public class AuthController : BaseAPIController
 {
-    public AuthController(IMediator mediator, IMapper mapper) : base(mediator, mapper)
+    public AuthController(IMediator mediator) : base(mediator)
     {
     }
 

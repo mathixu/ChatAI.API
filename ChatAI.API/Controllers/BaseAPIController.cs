@@ -11,13 +11,11 @@ namespace ChatAI.API.Controllers;
 [ApiExceptionFilter]
 public abstract class BaseAPIController : ControllerBase
 {
-    protected readonly IMapper _mapper;
     protected readonly IMediator _mediator;
 
-    public BaseAPIController(IMediator mediator, IMapper mapper)
+    public BaseAPIController(IMediator mediator)
     {
         _mediator = mediator;
-        _mapper = mapper;
     }
 
     protected Guid UserId

@@ -1,6 +1,18 @@
-﻿using AutoMapper;
+﻿using ChatAI.API.OptionsSetup;
+using ChatAI.Application.Handlers.Auth;
+using ChatAI.Application.Validators;
 using ChatAI.Infrastructure;
+using ChatAI.Application;
+using ChatAI.Infrastructure.Authentication;
+using ChatAI.Infrastructure.Services;
+using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Reflection;
+using System.Text;
 
 namespace ChatAI.API.Extensions;
 
@@ -13,12 +25,10 @@ public static class BuilderExtensions
         builder.Services.ConfigureAPI();
         builder.Services.ConfigureSwagger();
         builder.Services.ConfigureCors();
-        builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
-        //builder.Services.AddApplicationServices();
+        builder.Services.AddApplicationServices();
         builder.Services.AddInfrastructureServices(builder.Configuration);
-        //builder.Services.ConfigureBearer();
-
+        builder.Services.ConfigureBearer();
     }
 
     private static void ConfigureAPI(this IServiceCollection services)
@@ -26,7 +36,7 @@ public static class BuilderExtensions
         services.AddControllers();
     }
 
-    /*private static void ConfigureBearer(this IServiceCollection services)
+    private static void ConfigureBearer(this IServiceCollection services)
     {
         var jwtOptions = services.BuildServiceProvider().GetRequiredService<IOptions<JwtOptions>>().Value ?? throw new ArgumentNullException("JwtOptions");
 
@@ -51,14 +61,14 @@ public static class BuilderExtensions
                 ClockSkew = TimeSpan.Zero,
             };
         });
-    }*/
+    }
 
     private static void ConfigureSwagger(this IServiceCollection services)
     {
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 
-        /*services.AddSwaggerGen(setup =>
+        services.AddSwaggerGen(setup =>
         {
             var jwtSecurityScheme = new OpenApiSecurityScheme
             {
@@ -79,17 +89,19 @@ public static class BuilderExtensions
             setup.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
 
             setup.AddSecurityRequirement(new OpenApiSecurityRequirement { { jwtSecurityScheme, Array.Empty<string>() } });
-        });*/
+        });
     }
 
     private static void ConfigureDependancies(this IServiceCollection services)
     {
+        services.AddTransient<LoginCommandValidator>();
+        services.AddTransient<SignUpCommandValidator>();
     }
 
     private static void ConfigureOptions(this IServiceCollection services)
     {
-        /*services.ConfigureOptions<JwtOptionsSetup>();
-        services.ConfigureOptions<RefreshTokenOptionsSetup>();*/
+        services.ConfigureOptions<JwtOptionsSetup>();
+        //services.ConfigureOptions<RefreshTokenOptionsSetup>();
     }
 
     private static void ConfigureCors(this IServiceCollection services)
