@@ -1,6 +1,6 @@
 ﻿using ChatAI.Domain.Entities;
 
-namespace ChatAI.Application.Interfaces;
+namespace ChatAI.Application.Common.Interfaces;
 
 public interface IRefreshTokenProvider
 {

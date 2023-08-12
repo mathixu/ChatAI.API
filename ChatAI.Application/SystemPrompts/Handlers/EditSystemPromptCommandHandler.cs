@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using ChatAI.Application.Exceptions;
-using ChatAI.Application.Interfaces;
+using ChatAI.Application.Common.Interfaces;
+using ChatAI.Application.Common.Exceptions;
 using ChatAI.Application.SystemPrompts.Commands.EditSystemPrompt;
 using ChatAI.Application.SystemPrompts.DTOs;
 using ChatAI.Domain.Entities;

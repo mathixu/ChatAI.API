@@ -1,7 +1,7 @@
 ﻿using ChatAI.Domain.Entities;
 using ChatAI.Domain.Enums;
 
-namespace ChatAI.Application.Interfaces;
+namespace ChatAI.Application.Common.Interfaces;
 
 public interface IJwtProvider
 {

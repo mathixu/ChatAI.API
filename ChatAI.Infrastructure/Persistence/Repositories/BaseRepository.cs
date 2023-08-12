@@ -1,4 +1,4 @@
-﻿using ChatAI.Application.Interfaces;
+﻿using ChatAI.Application.Common.Interfaces;
 using ChatAI.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;

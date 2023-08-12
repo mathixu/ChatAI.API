@@ -1,4 +1,4 @@
-﻿using ChatAI.Application.Interfaces;
+﻿using ChatAI.Application.Common.Interfaces;
 using ChatAI.Infrastructure.Options;
 using Microsoft.Extensions.Options;
 using System.Security.Cryptography;

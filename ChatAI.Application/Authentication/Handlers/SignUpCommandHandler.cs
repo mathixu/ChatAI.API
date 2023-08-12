@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using ChatAI.Application.Exceptions;
-using ChatAI.Application.Interfaces;
+using ChatAI.Application.Common.Exceptions;
 using ChatAI.Domain.Entities;
 using MediatR;
 using ChatAI.Application.Authentication.DTOs;
 using ChatAI.Application.Authentication.Commands.SignUp;
 using MimeKit;
+using ChatAI.Application.Common.Interfaces;
 
 namespace ChatAI.Application.Authentication.Handlers;
 

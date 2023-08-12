@@ -1,7 +1,7 @@
 ﻿using ChatAI.Domain.Entities;
 using System.Linq.Expressions;
 
-namespace ChatAI.Application.Interfaces;
+namespace ChatAI.Application.Common.Interfaces;
 
 public interface IBaseRepository<TEntity> where TEntity : BaseEntity
 {

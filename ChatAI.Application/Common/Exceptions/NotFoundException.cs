@@ -1,4 +1,4 @@
-﻿namespace ChatAI.Application.Exceptions;
+﻿namespace ChatAI.Application.Common.Exceptions;
 
 public class NotFoundException : Exception
 {

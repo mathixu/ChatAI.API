@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using ChatAI.Application.Accounts.Commands.DeleteMyAccount;
-using ChatAI.Application.Interfaces;
 using ChatAI.Domain.Entities;
+using ChatAI.Application.Common.Interfaces;
 
 namespace ChatAI.Application.Accounts.Handlers;
 
