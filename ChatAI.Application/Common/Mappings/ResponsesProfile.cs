@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ChatAI.Application.Authentication.DTOs;
+using ChatAI.Application.Chats.DTOs;
 using ChatAI.Application.SystemPrompts.DTOs;
 using ChatAI.Domain.Entities;
 
@@ -11,5 +12,8 @@ public class ResponsesProfile : Profile
     {
         CreateMap<User, LoginResponse>();
         CreateMap<SystemPrompt, SystemPromptResponse>();
+        CreateMap<ChatSession, ChatSessionResponse>();
+        CreateMap<ChatSession, ChatSessionCreatedResponse>();
+        CreateMap<Message, MessageResponse>();
     }
 }

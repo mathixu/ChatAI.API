@@ -27,8 +27,8 @@ public class GetSystemPromptQueryHandler : IRequestHandler<GetSystemPromptQuery,
 
         var systemPrompt = await _repository.Get(sp => sp.Id == request.Id && sp.UserId == currentUserId) ?? throw new NotFoundException(nameof(SystemPrompt), request.Id);
 
-        var sytemPromptWrapper = _mapper.Map<SystemPromptResponse>(systemPrompt);
+        var sytemPromptWrapped = _mapper.Map<SystemPromptResponse>(systemPrompt);
 
-        return sytemPromptWrapper;
+        return sytemPromptWrapped;
     }
 }

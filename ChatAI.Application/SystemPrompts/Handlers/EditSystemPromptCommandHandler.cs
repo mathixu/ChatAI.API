@@ -31,8 +31,8 @@ public class EditSystemPromptCommandHandler : IRequestHandler<EditSystemPromptCo
 
         await _repository.Update(systemPrompt);
 
-        var systemPromptWrapper = _mapper.Map<SystemPromptResponse>(systemPrompt);
+        var systemPromptWrapped = _mapper.Map<SystemPromptResponse>(systemPrompt);
 
-        return systemPromptWrapper;
+        return systemPromptWrapped;
     }
 }
