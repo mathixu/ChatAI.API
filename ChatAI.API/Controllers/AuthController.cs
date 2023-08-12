@@ -1,5 +1,6 @@
 ﻿using ChatAI.API.Filters;
 using ChatAI.Application.Authentication.Commands.Login;
+using ChatAI.Application.Authentication.Commands.LogoutAllDevices;
 using ChatAI.Application.Authentication.Commands.Refresh;
 using ChatAI.Application.Authentication.Commands.RequestPasswordReset;
 using ChatAI.Application.Authentication.Commands.ResetPassword;
@@ -65,5 +66,14 @@ public class AuthController : BaseAPIController
         await _mediator.Send(resetPasswordCommand);
 
         return Ok(new { message = "Password reset successfully" });
+    }
+
+    [HttpPost("logout")]
+    [Authorize]
+    public async Task<IActionResult> Logout()
+    {
+        await _mediator.Send(new LogoutAllDevicesCommand());
+
+        return Ok(new { Message = "Logout successfully" });
     }
 }
