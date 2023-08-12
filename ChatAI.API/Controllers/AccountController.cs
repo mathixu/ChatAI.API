@@ -2,7 +2,6 @@
 using ChatAI.Application.Accounts.Commands.AddOpenAIToken;
 using ChatAI.Application.Accounts.Commands.DeleteMyAccount;
 using ChatAI.Application.Accounts.Commands.DeleteOpenAIToken;
-using ChatAI.Application.Authentication.Commands.LogoutAllDevices;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
