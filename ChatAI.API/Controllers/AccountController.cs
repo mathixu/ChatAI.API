@@ -1,6 +1,8 @@
 ﻿using ChatAI.API.Filters;
 using ChatAI.Application.Accounts.Commands.AddOpenAIToken;
 using ChatAI.Application.Accounts.Commands.DeleteMyAccount;
+using ChatAI.Application.Accounts.Commands.DeleteOpenAIToken;
+using ChatAI.Application.Authentication.Commands.LogoutAllDevices;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +23,22 @@ public class AccountController : BaseAPIController
         await _mediator.Send(addOpenAITokenCommand);
 
         return Ok(new { Message = "OpenAI Token updated successfully" });
+    }
+
+    [HttpDelete("openai-token")]
+    public async Task<IActionResult> DeleteOpenAIToken()
+    {
+        await _mediator.Send(new DeleteOpenAITokenCommand());
+
+        return NoContent();
+    }
+
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout()
+    {
+        await _mediator.Send(new LogoutAllDevicesCommand());
+
+        return Ok(new { Message = "Logout successfully" });
     }
 
     [HttpDelete("me")]
