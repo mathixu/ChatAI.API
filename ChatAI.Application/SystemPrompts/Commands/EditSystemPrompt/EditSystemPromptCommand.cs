@@ -11,4 +11,16 @@ public class EditSystemPromptCommand : IRequest<SystemPromptResponse>
 
     [JsonIgnore]
     public Guid Id { get; set; }
+
+    public EditSystemPromptCommand()
+    {
+    }
+
+    public EditSystemPromptCommand(Guid id, EditSystemPromptCommand editSystemPromptCommand)
+    {
+        Id = id;
+        Name = editSystemPromptCommand.Name;
+        Prompt = editSystemPromptCommand.Prompt;
+    }
+
 }

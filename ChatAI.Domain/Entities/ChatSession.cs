@@ -2,6 +2,8 @@
 
 public class ChatSession : BaseAuditableEntity
 {
+    public string? Title { get; set; }
+
     public List<Message> Messages { get; set; } = new();
 
     public Guid? ForkedFromMessageId { get; set; }

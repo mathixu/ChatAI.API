@@ -47,9 +47,7 @@ public class SystemPromptController : BaseAPIController
     [ValidationModelFilter(typeof(EditSystemPromptCommandValidator))]
     public async Task<IActionResult> Edit(Guid id, [FromBody] EditSystemPromptCommand editSystemPromptCommand)
     {
-        editSystemPromptCommand.Id = id;
-
-        var result = await _mediator.Send(editSystemPromptCommand);
+        var result = await _mediator.Send(new EditSystemPromptCommand(id, editSystemPromptCommand));
 
         return Ok(result);
     }

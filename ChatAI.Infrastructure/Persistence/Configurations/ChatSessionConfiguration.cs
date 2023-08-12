@@ -8,6 +8,10 @@ public class ChatSessionConfiguration : IEntityTypeConfiguration<ChatSession>
 {
     public void Configure(EntityTypeBuilder<ChatSession> builder)
     {
+        builder.Property(e => e.Title)
+            .HasMaxLength(100)
+            .IsRequired(false);
+
         builder.HasMany(cs => cs.Messages)
             .WithOne(m => m.ChatSession)
             .HasForeignKey(m => m.ChatSessionId)

@@ -29,8 +29,8 @@ public class AddSystemPromptCommandHandler : IRequestHandler<AddSystemPromptComm
 
         await _repository.Insert(systemPrompt);
 
-        var systemPromptWrapper = _mapper.Map<SystemPromptResponse>(systemPrompt);
+        var systemPromptWrapped = _mapper.Map<SystemPromptResponse>(systemPrompt);
 
-        return systemPromptWrapper;
+        return systemPromptWrapped;
     }
 }

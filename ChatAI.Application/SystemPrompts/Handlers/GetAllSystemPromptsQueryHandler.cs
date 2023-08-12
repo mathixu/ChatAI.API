@@ -26,8 +26,8 @@ public class GetAllSystemPromptsQueryHandler : IRequestHandler<GetAllSystemPromp
 
         var systemPrompts = await _repository.GetAll(sp => sp.UserId == currentUserId);
 
-        var sytemPromptsWrapper = _mapper.Map<List<SystemPromptResponse>>(systemPrompts);
+        var sytemPromptsWrapped = _mapper.Map<List<SystemPromptResponse>>(systemPrompts);
 
-        return sytemPromptsWrapper;
+        return sytemPromptsWrapped;
     }
 }
