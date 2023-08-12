@@ -1,4 +1,4 @@
-﻿using ChatAI.Application.Interfaces;
+﻿using ChatAI.Application.Common.Interfaces;
 using ChatAI.Infrastructure.Options;
 using MailKit.Net.Smtp;
 using MailKit.Security;

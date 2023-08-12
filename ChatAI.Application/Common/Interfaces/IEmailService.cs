@@ -1,6 +1,6 @@
 ﻿using MimeKit;
 
-namespace ChatAI.Application.Interfaces;
+namespace ChatAI.Application.Common.Interfaces;
 
 public interface IEmailService
 {

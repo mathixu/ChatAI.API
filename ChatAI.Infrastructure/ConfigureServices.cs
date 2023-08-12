@@ -1,4 +1,4 @@
-﻿using ChatAI.Application.Interfaces;
+﻿using ChatAI.Application.Common.Interfaces;
 using ChatAI.Infrastructure.Authentication;
 using ChatAI.Infrastructure.Persistence;
 using ChatAI.Infrastructure.Persistence.Interceptors;

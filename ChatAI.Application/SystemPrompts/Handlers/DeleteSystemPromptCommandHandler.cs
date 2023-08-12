@@ -1,5 +1,5 @@
-﻿using ChatAI.Application.Exceptions;
-using ChatAI.Application.Interfaces;
+﻿using ChatAI.Application.Common.Interfaces;
+using ChatAI.Application.Common.Exceptions;
 using ChatAI.Application.SystemPrompts.Commands.DeleteSystemPrompt;
 using ChatAI.Domain.Entities;
 using MediatR;

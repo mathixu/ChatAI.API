@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace ChatAI.Application.Mappings;
+namespace ChatAI.Application.Common.Mappings;
 
 public class GlobalProfile : Profile
 {

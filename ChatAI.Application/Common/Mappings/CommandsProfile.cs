@@ -4,7 +4,7 @@ using ChatAI.Application.SystemPrompts.Commands.AddSystemPrompt;
 using ChatAI.Application.SystemPrompts.Commands.EditSystemPrompt;
 using ChatAI.Domain.Entities;
 
-namespace ChatAI.Application.Mappings;
+namespace ChatAI.Application.Common.Mappings;
 
 public class CommandsProfile : Profile
 {

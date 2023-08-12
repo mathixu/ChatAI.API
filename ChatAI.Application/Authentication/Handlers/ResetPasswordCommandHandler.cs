@@ -1,8 +1,8 @@
-﻿using ChatAI.Application.Interfaces;
-using ChatAI.Domain.Entities;
+﻿using ChatAI.Domain.Entities;
 using MediatR;
 using MimeKit;
 using ChatAI.Application.Authentication.Commands.ResetPassword;
+using ChatAI.Application.Common.Interfaces;
 
 namespace ChatAI.Application.Authentication.Handlers;
 

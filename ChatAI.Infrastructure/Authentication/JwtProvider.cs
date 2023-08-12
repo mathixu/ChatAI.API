@@ -1,4 +1,4 @@
-﻿using ChatAI.Application.Interfaces;
+﻿using ChatAI.Application.Common.Interfaces;
 using ChatAI.Domain.Entities;
 using ChatAI.Domain.Enums;
 using ChatAI.Infrastructure.Options;

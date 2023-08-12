@@ -1,8 +1,8 @@
-﻿using ChatAI.Application.Interfaces;
-using ChatAI.Domain.Entities;
+﻿using ChatAI.Domain.Entities;
 using MediatR;
 using ChatAI.Application.Authentication.DTOs;
 using ChatAI.Application.Authentication.Commands.Refresh;
+using ChatAI.Application.Common.Interfaces;
 
 namespace ChatAI.Application.Authentication.Handlers;
 

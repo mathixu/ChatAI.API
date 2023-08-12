@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ChatAI.Application.Interfaces;
+using ChatAI.Application.Common.Interfaces;
 using ChatAI.Application.SystemPrompts.Commands.AddSystemPrompt;
 using ChatAI.Application.SystemPrompts.DTOs;
 using ChatAI.Domain.Entities;

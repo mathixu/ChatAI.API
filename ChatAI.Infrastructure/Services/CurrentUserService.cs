@@ -1,4 +1,4 @@
-﻿using ChatAI.Application.Interfaces;
+﻿using ChatAI.Application.Common.Interfaces;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 

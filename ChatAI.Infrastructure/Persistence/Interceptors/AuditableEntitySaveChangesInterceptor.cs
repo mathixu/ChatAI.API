@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using ChatAI.Domain.Entities;
-using ChatAI.Application.Interfaces;
+using ChatAI.Application.Common.Interfaces;
 
 namespace ChatAI.Infrastructure.Persistence.Interceptors;
 

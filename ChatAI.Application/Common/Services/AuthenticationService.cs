@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using ChatAI.Application.Authentication.DTOs;
-using ChatAI.Application.Interfaces;
+using ChatAI.Application.Common.Interfaces;
 using ChatAI.Domain.Entities;
 using ChatAI.Domain.Enums;
 
-namespace ChatAI.Application.Services;
+namespace ChatAI.Application.Common.Services;
 
 public class AuthenticationService : IAuthenticationService
 {
@@ -30,7 +30,7 @@ public class AuthenticationService : IAuthenticationService
 
         userResponse.AccessToken = _jwtProvider.Generate(user, JwtType.AccessToken);
         userResponse.RefreshToken = refreshToken.Token;
-        
+
         await _refreshTokenProvider.RevokeAllExpired(user);
 
         if (userResponse.OpenAIToken is not null)

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
-using ChatAI.Application.Exceptions;
+using ChatAI.Application.Common.Exceptions;
 
 namespace ChatAI.API.Filters;
 
