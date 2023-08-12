@@ -14,6 +14,7 @@ public class ResponsesProfile : Profile
         CreateMap<SystemPrompt, SystemPromptResponse>();
         CreateMap<ChatSession, ChatSessionResponse>();
         CreateMap<ChatSession, ChatSessionCreatedResponse>();
+        CreateMap<ChatSession, GetAllChatSessionsResponse>();
         CreateMap<Message, MessageResponse>();
     }
 }

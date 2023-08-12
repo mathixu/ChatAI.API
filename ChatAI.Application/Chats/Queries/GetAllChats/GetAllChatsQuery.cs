@@ -3,6 +3,6 @@ using MediatR;
 
 namespace ChatAI.Application.Chats.Queries.GetAllChats;
 
-public class GetAllChatsQuery : IRequest<List<ChatSessionResponse>>
+public class GetAllChatsQuery : IRequest<List<GetAllChatSessionsResponse>>
 {
 }

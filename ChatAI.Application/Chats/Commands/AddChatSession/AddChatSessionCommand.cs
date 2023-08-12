@@ -5,4 +5,5 @@ namespace ChatAI.Application.Chats.Commands.AddChatSession;
 
 public class AddChatSessionCommand : IRequest<ChatSessionCreatedResponse>
 {
+    public string? Title { get; set; }
 }

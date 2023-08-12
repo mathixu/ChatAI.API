@@ -1,5 +1,8 @@
-﻿using ChatAI.Application.Chats.Commands.AddChatSession;
+﻿using ChatAI.API.Filters;
+using ChatAI.Application.Chats.Commands.AddChatSession;
+using ChatAI.Application.Chats.Commands.AddMessage;
 using ChatAI.Application.Chats.Commands.DeleteChatSession;
+using ChatAI.Application.Chats.Commands.EditChatSessionTitle;
 using ChatAI.Application.Chats.Queries.GetAllChats;
 using ChatAI.Application.Chats.Queries.GetChat;
 using MediatR;
@@ -32,9 +35,19 @@ public class ChatController : BaseAPIController
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create()
+    [ValidationModelFilter(typeof(AddChatSessionCommandValidator))]
+    public async Task<IActionResult> Create([FromBody] AddChatSessionCommand addChatSessionCommand)
     {
-        var result = await _mediator.Send(new AddChatSessionCommand());
+        var result = await _mediator.Send(addChatSessionCommand);
+
+        return Ok(result);
+    }
+
+    [HttpPut("{id:guid}/title")]
+    [ValidationModelFilter(typeof(EditChatSessionTitleCommandValidator))]
+    public async Task<IActionResult> Edit(Guid id, [FromBody] EditChatSessionTitleCommand editChatSessionTitleCommand)
+    {
+        var result = await _mediator.Send(new EditChatSessionTitleCommand(id, editChatSessionTitleCommand));
 
         return Ok(result);
     }
@@ -45,5 +58,16 @@ public class ChatController : BaseAPIController
         await _mediator.Send(new DeleteChatSessionCommand(id));
 
         return NoContent();
+    }
+
+
+
+    [HttpPost("{id:guid}/messages")]
+    [ValidationModelFilter(typeof(AddMessageCommandValidator))]
+    public async Task<IActionResult> AddMessage(Guid id, [FromBody] AddMessageCommand addMessageCommand)
+    {
+        var result = await _mediator.Send(new AddMessageCommand(id, addMessageCommand));
+
+        return Ok(result);
     }
 }

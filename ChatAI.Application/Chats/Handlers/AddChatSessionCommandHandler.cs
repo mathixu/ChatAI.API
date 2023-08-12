@@ -23,11 +23,10 @@ public class AddChatSessionCommandHandler : IRequestHandler<AddChatSessionComman
     public async Task<ChatSessionCreatedResponse> Handle(AddChatSessionCommand request, CancellationToken cancellationToken)
     {
         var currentUserId = _currentUserService.GetCurrentUserId() ?? throw new UnauthorizedAccessException();
-        
-        var chatSession = new ChatSession
-        {
-            UserId = currentUserId,
-        };
+
+        var chatSession = _mapper.Map<ChatSession>(request);
+
+        chatSession.UserId = currentUserId;
 
         await _repository.Insert(chatSession);
 

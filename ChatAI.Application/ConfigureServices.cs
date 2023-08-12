@@ -13,6 +13,9 @@ using ChatAI.Application.SystemPrompts.Commands.AddSystemPrompt;
 using ChatAI.Application.SystemPrompts.Commands.EditSystemPrompt;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using ChatAI.Application.Chats.Commands.AddMessage;
+using ChatAI.Application.Chats.Commands.AddChatSession;
+using ChatAI.Application.Chats.Commands.EditChatSessionTitle;
 
 namespace ChatAI.Application;
 
@@ -43,6 +46,9 @@ public static class ConfigureServices
         services.AddTransient<DeleteMyAccountCommandValidator>();
         services.AddTransient<AddSystemPromptCommandValidator>();
         services.AddTransient<EditSystemPromptCommandValidator>();
+        services.AddTransient<AddMessageCommandValidator>();
+        services.AddTransient<AddChatSessionCommandValidator>();
+        services.AddTransient<EditChatSessionTitleCommandValidator>();
     }
 
     private static void ConfigureMapper(this IServiceCollection services)
