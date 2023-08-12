@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace ChatAI.Application.Account.Commands.DeleteMyAccount;
+namespace ChatAI.Application.Accounts.Commands.DeleteMyAccount;
 
 public class DeleteMyAccountCommandValidator : AbstractValidator<DeleteMyAccountCommand>
 {

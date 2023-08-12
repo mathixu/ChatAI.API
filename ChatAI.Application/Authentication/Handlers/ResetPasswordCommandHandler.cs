@@ -29,12 +29,8 @@ public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand>
     {
         var token = _currentUserService.GetCurrentUserToken();
 
-        var resetPasswordToken = await _resetPasswordTokenRepository.Get(x => x.Token == token && x.ExpiresAt > _dateTime.Now && !x.IsUsed, new List<string> { "User" });
-
-        if (resetPasswordToken is null)
-        {
-            throw new UnauthorizedAccessException();
-        }
+        var resetPasswordToken = await _resetPasswordTokenRepository.Get(x => x.Token == token && x.ExpiresAt > _dateTime.Now && !x.IsUsed, new List<string> { "User" }) 
+            ?? throw new UnauthorizedAccessException();
 
         var user = resetPasswordToken.User;
 

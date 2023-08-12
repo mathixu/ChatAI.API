@@ -4,7 +4,6 @@ using ChatAI.Application.Authentication.Commands.Refresh;
 using ChatAI.Application.Authentication.Commands.RequestPasswordReset;
 using ChatAI.Application.Authentication.Commands.ResetPassword;
 using ChatAI.Application.Authentication.Commands.SignUp;
-using ChatAI.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

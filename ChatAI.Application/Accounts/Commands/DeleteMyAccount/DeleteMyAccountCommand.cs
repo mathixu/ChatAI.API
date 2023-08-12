@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace ChatAI.Application.Account.Commands.DeleteMyAccount;
+namespace ChatAI.Application.Accounts.Commands.DeleteMyAccount;
 
 public class DeleteMyAccountCommand : IRequest
 {

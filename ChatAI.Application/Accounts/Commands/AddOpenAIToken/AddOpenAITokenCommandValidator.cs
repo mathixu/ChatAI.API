@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace ChatAI.Application.Account.Commands.AddOpenAIToken;
+namespace ChatAI.Application.Accounts.Commands.AddOpenAIToken;
 
 public class AddOpenAITokenCommandValidator : AbstractValidator<AddOpenAITokenCommand>
 {

@@ -29,6 +29,7 @@ public static class ConfigureServices
         services.AddTransient<IDateTime, DateTimeService>(); 
         services.AddTransient<ICurrentUserService, CurrentUserService>();
         services.AddTransient<IEmailService, EmailService>();
+        services.AddTransient<IEncryptionService, EncryptionService>();
 
         services.AddScoped<IHashService, HashService>();
         services.AddScoped<IJwtProvider, JwtProvider>();

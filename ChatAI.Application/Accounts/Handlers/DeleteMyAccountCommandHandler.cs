@@ -1,9 +1,9 @@
 ﻿using MediatR;
-using ChatAI.Application.Account.Commands.DeleteMyAccount;
+using ChatAI.Application.Accounts.Commands.DeleteMyAccount;
 using ChatAI.Application.Interfaces;
 using ChatAI.Domain.Entities;
 
-namespace ChatAI.Application.Account.Handlers;
+namespace ChatAI.Application.Accounts.Handlers;
 
 public class DeleteMyAccountCommandHandler : IRequestHandler<DeleteMyAccountCommand>
 {
