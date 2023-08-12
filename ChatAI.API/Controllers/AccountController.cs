@@ -33,14 +33,6 @@ public class AccountController : BaseAPIController
         return NoContent();
     }
 
-    [HttpPost("logout")]
-    public async Task<IActionResult> Logout()
-    {
-        await _mediator.Send(new LogoutAllDevicesCommand());
-
-        return Ok(new { Message = "Logout successfully" });
-    }
-
     [HttpDelete("me")]
     [ValidationModelFilter(typeof(DeleteMyAccountCommandValidator))]
     public async Task<IActionResult> DeleteMyAccount([FromBody] DeleteMyAccountCommand deleteMyAccountCommand)
