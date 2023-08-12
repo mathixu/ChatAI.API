@@ -62,7 +62,7 @@ public class SystemPromptController : BaseAPIController
         return NoContent();
     }
 
-    [HttpPut("toggle-favorite/{id:guid}")]
+    [HttpPut("{id:guid}/toggle-favorite")]
     public async Task<IActionResult> ToggleFavorite(Guid id)
     {
         var result = await _mediator.Send(new ToggleFavoriteSystemPromptCommand(id));
