@@ -3,6 +3,7 @@ using System;
 using ChatAI.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChatAI.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ChatAIDbContext))]
-    partial class ChatAIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230811181115_ChatSessionsAndMessages")]
+    partial class ChatSessionsAndMessages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,41 +127,6 @@ namespace ChatAI.Infrastructure.Persistence.Migrations
                     b.ToTable("ResetPasswordTokens");
                 });
 
-            modelBuilder.Entity("ChatAI.Domain.Entities.SystemPrompt", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<bool>("IsFavorite")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<string>("Prompt")
-                        .IsRequired()
-                        .HasMaxLength(1024)
-                        .HasColumnType("varchar(1024)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("SystemPrompts");
-                });
-
             modelBuilder.Entity("ChatAI.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -245,17 +213,6 @@ namespace ChatAI.Infrastructure.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ChatAI.Domain.Entities.SystemPrompt", b =>
-                {
-                    b.HasOne("ChatAI.Domain.Entities.User", "User")
-                        .WithMany("SystemPrompts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("ChatAI.Domain.Entities.ChatSession", b =>
                 {
                     b.Navigation("Messages");
@@ -268,8 +225,6 @@ namespace ChatAI.Infrastructure.Persistence.Migrations
                     b.Navigation("RefreshTokens");
 
                     b.Navigation("ResetPasswordTokens");
-
-                    b.Navigation("SystemPrompts");
                 });
 #pragma warning restore 612, 618
         }

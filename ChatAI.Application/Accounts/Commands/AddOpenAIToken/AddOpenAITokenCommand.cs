@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace ChatAI.Application.Account.Commands.AddOpenAIToken;
+namespace ChatAI.Application.Accounts.Commands.AddOpenAIToken;
 
 public class AddOpenAITokenCommand : IRequest
 {

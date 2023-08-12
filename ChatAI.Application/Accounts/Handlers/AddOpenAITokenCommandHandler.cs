@@ -1,19 +1,21 @@
 ﻿using ChatAI.Application.Interfaces;
-using ChatAI.Application.Account.Commands.AddOpenAIToken;
+using ChatAI.Application.Accounts.Commands.AddOpenAIToken;
 using MediatR;
 using ChatAI.Domain.Entities;
 
-namespace ChatAI.Application.Account.Handlers;
+namespace ChatAI.Application.Accounts.Handlers;
 
 public class AddOpenAITokenCommandHandler : IRequestHandler<AddOpenAITokenCommand>
 {
     private readonly IBaseRepository<User> _userRepository;
     private readonly ICurrentUserService _currentUserService;
+    private readonly IEncryptionService _encryptionService;
 
-    public AddOpenAITokenCommandHandler(IBaseRepository<User> userRepository, ICurrentUserService currentUserService)
+    public AddOpenAITokenCommandHandler(IBaseRepository<User> userRepository, ICurrentUserService currentUserService, IEncryptionService encryptionService)
     {
         _userRepository = userRepository;
         _currentUserService = currentUserService;
+        _encryptionService = encryptionService;
     }
 
     public async Task Handle(AddOpenAITokenCommand request, CancellationToken cancellationToken)
@@ -22,7 +24,7 @@ public class AddOpenAITokenCommandHandler : IRequestHandler<AddOpenAITokenComman
         
         var user = await _userRepository.Get(userId) ?? throw new UnauthorizedAccessException();
 
-        user.OpenAIToken = request.OpenAIToken;
+        user.OpenAIToken = _encryptionService.Encrypt(request.OpenAIToken);
 
         await _userRepository.Update(user);
     }

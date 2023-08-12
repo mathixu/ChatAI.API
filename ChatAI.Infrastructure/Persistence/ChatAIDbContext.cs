@@ -11,6 +11,9 @@ public class ChatAIDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
     public DbSet<ResetPasswordToken> ResetPasswordTokens { get; set; }
+    public DbSet<ChatSession> ChatSessions { get; set; }
+    public DbSet<SystemPrompt> SystemPrompts { get; set; }
+    public DbSet<Message> Messages { get; set; }
 
     public ChatAIDbContext(DbContextOptions<ChatAIDbContext> options, AuditableEntitySaveChangesInterceptor auditableEntitySaveChangesInterceptor) : base(options)
     {

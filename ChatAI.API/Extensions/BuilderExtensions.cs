@@ -94,6 +94,7 @@ public static class BuilderExtensions
         services.ConfigureOptions<JwtOptionsSetup>();
         services.ConfigureOptions<RefreshTokenOptionsSetup>();
         services.ConfigureOptions<SmtpOptionsSetup>();
+        services.ConfigureOptions<EncryptionOptionsSetup>();
     }
 
     private static void ConfigureCors(this IServiceCollection services)

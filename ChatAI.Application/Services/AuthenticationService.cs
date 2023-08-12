@@ -11,13 +11,15 @@ public class AuthenticationService : IAuthenticationService
     private readonly IMapper _mapper;
     private readonly IJwtProvider _jwtProvider;
     private readonly IRefreshTokenProvider _refreshTokenProvider;
+    private readonly IEncryptionService _encryptionService;
 
     public AuthenticationService(
-        IMapper mapper, IJwtProvider jwtProvider, IRefreshTokenProvider refreshTokenProvider)
+        IMapper mapper, IJwtProvider jwtProvider, IRefreshTokenProvider refreshTokenProvider, IEncryptionService encryptionService)
     {
         _mapper = mapper;
         _jwtProvider = jwtProvider;
         _refreshTokenProvider = refreshTokenProvider;
+        _encryptionService = encryptionService;
     }
 
     public async Task<LoginResponse> GenerateUserAuthenticationTokens(User user)
@@ -28,8 +30,13 @@ public class AuthenticationService : IAuthenticationService
 
         userResponse.AccessToken = _jwtProvider.Generate(user, JwtType.AccessToken);
         userResponse.RefreshToken = refreshToken.Token;
-
+        
         await _refreshTokenProvider.RevokeAllExpired(user);
+
+        if (userResponse.OpenAIToken is not null)
+        {
+            userResponse.OpenAIToken = _encryptionService.Decrypt(userResponse.OpenAIToken);
+        }
 
         return userResponse;
     }
