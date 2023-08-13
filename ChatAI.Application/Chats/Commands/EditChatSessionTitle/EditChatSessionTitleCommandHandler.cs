@@ -24,9 +24,8 @@ public class EditChatSessionTitleCommandHandler : IRequestHandler<EditChatSessio
     {
         var currentUserId = _currentUserService.UserId ?? throw new UnauthorizedAccessException();
 
-        var chatSession = await _repository.Get(cs => cs.Id == request.ChatSessionId && cs.UserId == currentUserId)
+        var chatSession = await _repository.Get(cs => cs.Id == request.ChatSessionId && cs.UserId == currentUserId && cs.ForkedFromMessageId == null)
             ?? throw new NotFoundException(nameof(ChatSession), request.ChatSessionId);
-
 
         chatSession.Title = request.Title;
 

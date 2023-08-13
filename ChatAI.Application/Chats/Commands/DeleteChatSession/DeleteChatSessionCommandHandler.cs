@@ -20,7 +20,7 @@ public class DeleteChatSessionCommandHandler : IRequestHandler<DeleteChatSession
     {
         var currentUserId = _currentUserService.UserId ?? throw new UnauthorizedAccessException();
 
-        var chatSession = await _repository.Get(cs => cs.Id == request.Id && cs.UserId == currentUserId)
+        var chatSession = await _repository.Get(cs => cs.Id == request.Id && cs.UserId == currentUserId && cs.ForkedFromMessageId == null)
             ?? throw new NotFoundException(nameof(ChatSession), request.Id);
 
 
