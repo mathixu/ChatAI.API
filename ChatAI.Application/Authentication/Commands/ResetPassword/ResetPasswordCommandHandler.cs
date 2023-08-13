@@ -1,10 +1,9 @@
 ﻿using ChatAI.Domain.Entities;
 using MediatR;
 using MimeKit;
-using ChatAI.Application.Authentication.Commands.ResetPassword;
 using ChatAI.Application.Common.Interfaces;
 
-namespace ChatAI.Application.Authentication.Handlers;
+namespace ChatAI.Application.Authentication.Commands.ResetPassword;
 
 public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand>
 {
@@ -27,15 +26,15 @@ public class ResetPasswordCommandHandler : IRequestHandler<ResetPasswordCommand>
 
     public async Task Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
     {
-        var token = _currentUserService.GetCurrentUserToken();
+        var token = _currentUserService.UserToken ?? throw new UnauthorizedAccessException();
 
-        var resetPasswordToken = await _resetPasswordTokenRepository.Get(x => x.Token == token && x.ExpiresAt > _dateTime.Now && !x.IsUsed, new List<string> { "User" }) 
+        var resetPasswordToken = await _resetPasswordTokenRepository.Get(x => x.Token == token && x.ExpiresAt > _dateTime.Now && !x.IsUsed, new List<string> { "User" })
             ?? throw new UnauthorizedAccessException();
 
         var user = resetPasswordToken.User;
 
         user.HashedPassword = _hashService.Hash(request.Password);
-        
+
         resetPasswordToken.IsUsed = true;
 
         await _userRepository.Update(user);

@@ -1,9 +1,8 @@
-﻿using ChatAI.Application.Authentication.Commands.LogoutAllDevices;
-using ChatAI.Application.Common.Interfaces;
+﻿using ChatAI.Application.Common.Interfaces;
 using ChatAI.Domain.Entities;
 using MediatR;
 
-namespace ChatAI.Application.Authentication.Handlers;
+namespace ChatAI.Application.Authentication.Commands.LogoutAllDevices;
 
 public class LogoutAllDevicesCommandHandler : IRequestHandler<LogoutAllDevicesCommand>
 {
@@ -20,7 +19,7 @@ public class LogoutAllDevicesCommandHandler : IRequestHandler<LogoutAllDevicesCo
 
     public async Task Handle(LogoutAllDevicesCommand request, CancellationToken cancellationToken)
     {
-        var currentUserId = _currentUserService.GetCurrentUserId() ?? throw new UnauthorizedAccessException();
+        var currentUserId = _currentUserService.UserId ?? throw new UnauthorizedAccessException();
 
         var user = await _userRepository.Get(currentUserId) ?? throw new UnauthorizedAccessException();
 

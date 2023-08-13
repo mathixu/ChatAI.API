@@ -2,7 +2,7 @@
 
 public interface ICurrentUserService
 {
-    string? GetCurrentUserEmail();
-    Guid? GetCurrentUserId();
-    string? GetCurrentUserToken();
+    string? UserEmail { get; }
+    Guid? UserId { get; }
+    string? UserToken { get; }
 }

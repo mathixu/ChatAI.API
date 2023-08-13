@@ -1,9 +1,8 @@
-﻿using ChatAI.Application.Accounts.Commands.DeleteOpenAIToken;
-using ChatAI.Application.Common.Interfaces;
+﻿using ChatAI.Application.Common.Interfaces;
 using ChatAI.Domain.Entities;
 using MediatR;
 
-namespace ChatAI.Application.Accounts.Handlers;
+namespace ChatAI.Application.Accounts.Commands.DeleteOpenAIToken;
 
 public class DeleteOpenAITokenCommandHandler : IRequestHandler<DeleteOpenAITokenCommand>
 {
@@ -18,10 +17,10 @@ public class DeleteOpenAITokenCommandHandler : IRequestHandler<DeleteOpenAIToken
 
     public async Task Handle(DeleteOpenAITokenCommand request, CancellationToken cancellationToken)
     {
-        var currentUserId = _currentUserService.GetCurrentUserId() ?? throw new UnauthorizedAccessException();
+        var currentUserId = _currentUserService.UserId ?? throw new UnauthorizedAccessException();
 
         var user = await _repository.Get(currentUserId) ?? throw new UnauthorizedAccessException();
-        
+
         user.OpenAIToken = null;
 
         await _repository.Update(user);

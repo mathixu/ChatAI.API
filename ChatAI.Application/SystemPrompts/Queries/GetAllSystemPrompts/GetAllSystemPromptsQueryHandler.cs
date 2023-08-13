@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using ChatAI.Application.Common.Interfaces;
 using ChatAI.Application.SystemPrompts.DTOs;
-using ChatAI.Application.SystemPrompts.Queries.GetAllSystemPrompts;
 using ChatAI.Domain.Entities;
 using MediatR;
 
-namespace ChatAI.Application.SystemPrompts.Handlers;
+namespace ChatAI.Application.SystemPrompts.Queries.GetAllSystemPrompts;
 
 public class GetAllSystemPromptsQueryHandler : IRequestHandler<GetAllSystemPromptsQuery, List<SystemPromptResponse>>
 {
@@ -22,7 +21,7 @@ public class GetAllSystemPromptsQueryHandler : IRequestHandler<GetAllSystemPromp
 
     public async Task<List<SystemPromptResponse>> Handle(GetAllSystemPromptsQuery request, CancellationToken cancellationToken)
     {
-        var currentUserId = _currentUserService.GetCurrentUserId() ?? throw new UnauthorizedAccessException();
+        var currentUserId = _currentUserService.UserId ?? throw new UnauthorizedAccessException();
 
         var systemPrompts = await _repository.GetAll(sp => sp.UserId == currentUserId);
 

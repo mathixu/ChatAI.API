@@ -20,6 +20,11 @@ public class ChatSessionConfiguration : IEntityTypeConfiguration<ChatSession>
         builder.HasOne(cs => cs.ForkedFromMessage)
             .WithMany()
             .HasForeignKey(cs => cs.ForkedFromMessageId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(cs => cs.ForkedFromChatSession)
+            .WithMany(cs => cs.ForkedChatSessions)
+            .HasForeignKey(cs => cs.ForkedFromChatSessionId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

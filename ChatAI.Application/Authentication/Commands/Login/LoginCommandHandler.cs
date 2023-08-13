@@ -1,10 +1,9 @@
 ﻿using ChatAI.Domain.Entities;
 using MediatR;
 using ChatAI.Application.Authentication.DTOs;
-using ChatAI.Application.Authentication.Commands.Login;
 using ChatAI.Application.Common.Interfaces;
 
-namespace ChatAI.Application.Authentication.Handlers;
+namespace ChatAI.Application.Authentication.Commands.Login;
 
 public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
 {

@@ -15,6 +15,7 @@ public static class ConfigureServices
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+        services.AddScoped<IChatSessionRepository, ChatSessionRepository>();
 
         services.AddScoped<AuditableEntitySaveChangesInterceptor>();
 

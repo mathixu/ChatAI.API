@@ -1,9 +1,8 @@
 ﻿using MediatR;
-using ChatAI.Application.Accounts.Commands.DeleteMyAccount;
 using ChatAI.Domain.Entities;
 using ChatAI.Application.Common.Interfaces;
 
-namespace ChatAI.Application.Accounts.Handlers;
+namespace ChatAI.Application.Accounts.Commands.DeleteMyAccount;
 
 public class DeleteMyAccountCommandHandler : IRequestHandler<DeleteMyAccountCommand>
 {
@@ -20,7 +19,7 @@ public class DeleteMyAccountCommandHandler : IRequestHandler<DeleteMyAccountComm
 
     public async Task Handle(DeleteMyAccountCommand request, CancellationToken cancellationToken)
     {
-        var userId = _currentUserService.GetCurrentUserId() ?? throw new UnauthorizedAccessException();
+        var userId = _currentUserService.UserId ?? throw new UnauthorizedAccessException();
 
         var user = await _userRepository.Get(userId) ?? throw new UnauthorizedAccessException();
 

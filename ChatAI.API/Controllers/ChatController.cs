@@ -3,6 +3,7 @@ using ChatAI.Application.Chats.Commands.AddChatSession;
 using ChatAI.Application.Chats.Commands.AddMessage;
 using ChatAI.Application.Chats.Commands.DeleteChatSession;
 using ChatAI.Application.Chats.Commands.EditChatSessionTitle;
+using ChatAI.Application.Chats.Commands.ForkMessage;
 using ChatAI.Application.Chats.Queries.GetAllChats;
 using ChatAI.Application.Chats.Queries.GetChat;
 using MediatR;
@@ -67,6 +68,15 @@ public class ChatController : BaseAPIController
     public async Task<IActionResult> AddMessage(Guid id, [FromBody] AddMessageCommand addMessageCommand)
     {
         var result = await _mediator.Send(new AddMessageCommand(id, addMessageCommand));
+
+        return Ok(result);
+    }
+
+    [HttpPost("{sessionId:guid}/messages/{messageId:guid}/fork")]
+    [ValidationModelFilter(typeof(ForkMessageCommandValidator))]
+    public async Task<IActionResult> ForkMessage(Guid sessionId, Guid messageId, [FromBody] ForkMessageCommand forkMessageCommand)
+    {
+        var result = await _mediator.Send(new ForkMessageCommand(sessionId, messageId, forkMessageCommand));
 
         return Ok(result);
     }

@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using ChatAI.Application.Common.Interfaces;
 using ChatAI.Application.Common.Exceptions;
-using ChatAI.Application.SystemPrompts.Commands.EditSystemPrompt;
 using ChatAI.Application.SystemPrompts.DTOs;
 using ChatAI.Domain.Entities;
 using MediatR;
 
-namespace ChatAI.Application.SystemPrompts.Handlers;
+namespace ChatAI.Application.SystemPrompts.Commands.EditSystemPrompt;
 
 public class EditSystemPromptCommandHandler : IRequestHandler<EditSystemPromptCommand, SystemPromptResponse>
 {
@@ -23,7 +22,7 @@ public class EditSystemPromptCommandHandler : IRequestHandler<EditSystemPromptCo
 
     public async Task<SystemPromptResponse> Handle(EditSystemPromptCommand request, CancellationToken cancellationToken)
     {
-        var currentUserId = _currentUserService.GetCurrentUserId() ?? throw new UnauthorizedAccessException();
+        var currentUserId = _currentUserService.UserId ?? throw new UnauthorizedAccessException();
 
         var systemPrompt = await _repository.Get(sp => sp.Id == request.Id && sp.UserId == currentUserId) ?? throw new NotFoundException(nameof(SystemPrompt), request.Id);
 
