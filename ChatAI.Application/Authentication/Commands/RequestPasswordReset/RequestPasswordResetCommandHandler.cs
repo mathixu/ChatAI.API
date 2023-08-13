@@ -1,12 +1,11 @@
 ﻿using ChatAI.Domain.Entities;
 using MediatR;
-using ChatAI.Application.Authentication.Commands.RequestPasswordReset;
 using ChatAI.Domain.Enums;
 using MimeKit;
 using Microsoft.Extensions.Configuration;
 using ChatAI.Application.Common.Interfaces;
 
-namespace ChatAI.Application.Authentication.Handlers;
+namespace ChatAI.Application.Authentication.Commands.RequestPasswordReset;
 
 public class RequestPasswordResetCommandHandler : IRequestHandler<RequestPasswordResetCommand>
 {

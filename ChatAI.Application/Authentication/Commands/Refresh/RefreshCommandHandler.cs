@@ -1,10 +1,9 @@
 ﻿using ChatAI.Domain.Entities;
 using MediatR;
 using ChatAI.Application.Authentication.DTOs;
-using ChatAI.Application.Authentication.Commands.Refresh;
 using ChatAI.Application.Common.Interfaces;
 
-namespace ChatAI.Application.Authentication.Handlers;
+namespace ChatAI.Application.Authentication.Commands.Refresh;
 
 public class RefreshCommandHandler : IRequestHandler<RefreshCommand, LoginResponse>
 {
@@ -25,7 +24,7 @@ public class RefreshCommandHandler : IRequestHandler<RefreshCommand, LoginRespon
     {
         var token = await _repository.Get(x => x.Token == request.RefreshToken && x.ExpiresAt > _dateTime.Now,
             new List<string> { "User" }) ?? throw new UnauthorizedAccessException();
-        
+
         await _refreshTokenProvider.Revoke(token);
 
         return await _authenticationService.GenerateUserAuthenticationTokens(token.User);

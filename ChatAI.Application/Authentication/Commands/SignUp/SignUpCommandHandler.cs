@@ -3,11 +3,10 @@ using ChatAI.Application.Common.Exceptions;
 using ChatAI.Domain.Entities;
 using MediatR;
 using ChatAI.Application.Authentication.DTOs;
-using ChatAI.Application.Authentication.Commands.SignUp;
 using MimeKit;
 using ChatAI.Application.Common.Interfaces;
 
-namespace ChatAI.Application.Authentication.Handlers;
+namespace ChatAI.Application.Authentication.Commands.SignUp;
 
 public class SignUpCommandHandler : IRequestHandler<SignUpCommand, LoginResponse>
 {
@@ -30,7 +29,7 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, LoginResponse
     {
         var user = await _userRepository.Get(u => u.Email == request.Email);
 
-        if(user is not null)
+        if (user is not null)
         {
             throw new AlreadyExistException(nameof(user), request.Email);
         }
@@ -59,7 +58,7 @@ public class SignUpCommandHandler : IRequestHandler<SignUpCommand, LoginResponse
         {
             Text = body
         };
-        
+
 
         await _emailService.SendAsync(message);
     }

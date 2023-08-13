@@ -7,8 +7,8 @@ namespace ChatAI.Infrastructure.Persistence.Repositories;
 
 public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
 {
-    private readonly ChatAIDbContext _context;
-    private readonly DbSet<TEntity> _dbSet;
+    protected readonly ChatAIDbContext _context;
+    protected readonly DbSet<TEntity> _dbSet;
 
     public BaseRepository(ChatAIDbContext context)
     {

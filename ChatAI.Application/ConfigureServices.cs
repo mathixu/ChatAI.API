@@ -16,6 +16,7 @@ using System.Reflection;
 using ChatAI.Application.Chats.Commands.AddMessage;
 using ChatAI.Application.Chats.Commands.AddChatSession;
 using ChatAI.Application.Chats.Commands.EditChatSessionTitle;
+using ChatAI.Application.Chats.Commands.ForkMessage;
 
 namespace ChatAI.Application;
 
@@ -49,6 +50,7 @@ public static class ConfigureServices
         services.AddTransient<AddMessageCommandValidator>();
         services.AddTransient<AddChatSessionCommandValidator>();
         services.AddTransient<EditChatSessionTitleCommandValidator>();
+        services.AddTransient<ForkMessageCommandValidator>();
     }
 
     private static void ConfigureMapper(this IServiceCollection services)

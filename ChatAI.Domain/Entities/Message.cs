@@ -7,4 +7,15 @@ public class Message : BaseAuditableEntity
 
     public ChatSession ChatSession { get; set; } = default!;
     public Guid ChatSessionId { get; set; }
+
+    public Message()
+    {
+    }
+
+    public Message(string content, bool isFromUser, Guid chatSessionId)
+    {
+        Content = content;
+        IsFromUser = isFromUser;
+        ChatSessionId = chatSessionId;
+    }
 }

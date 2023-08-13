@@ -13,27 +13,30 @@ public class CurrentUserService : ICurrentUserService
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public string? GetCurrentUserEmail()
-    {
-        return _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value;
-    }
+    public string? UserEmail => _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Email)?.Value;
 
-    public Guid? GetCurrentUserId()
+    public Guid? UserId
     {
-        var userId = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-        if (userId == null || !Guid.TryParse(userId, out var userIdGuid))
+        get
         {
-            return null;
-        }
+            var userId = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-        return userIdGuid;
+            if (userId == null || !Guid.TryParse(userId, out var userIdGuid))
+            {
+                return null;
+            }
+
+            return userIdGuid;
+        }
     }
 
-    public string? GetCurrentUserToken()
+    public string? UserToken
     {
-        var header = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"];
+        get
+        {
+            var header = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"];
 
-        return header?.ToString().Split(" ").Last();
+            return header?.ToString().Split(" ").Last();
+        }
     }
 }

@@ -8,7 +8,12 @@ public class ChatSession : BaseAuditableEntity
 
     public Guid? ForkedFromMessageId { get; set; }
     public Message? ForkedFromMessage { get; set; } = default!;
-    
+
+    public List<ChatSession> ForkedChatSessions { get; set; } = new();
+    public Guid? ForkedFromChatSessionId { get; set; }
+    public ChatSession? ForkedFromChatSession { get; set; }
+
+
     public Guid UserId { get; set; }
     public User User { get; set; } = default!;
 }

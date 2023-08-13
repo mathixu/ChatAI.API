@@ -2,6 +2,7 @@
 using ChatAI.Application.Authentication.Commands.SignUp;
 using ChatAI.Application.Chats.Commands.AddChatSession;
 using ChatAI.Application.Chats.Commands.AddMessage;
+using ChatAI.Application.Chats.Commands.ForkMessage;
 using ChatAI.Application.SystemPrompts.Commands.AddSystemPrompt;
 using ChatAI.Application.SystemPrompts.Commands.EditSystemPrompt;
 using ChatAI.Domain.Entities;
@@ -19,5 +20,9 @@ public class CommandsProfile : Profile
         
         CreateMap<AddMessageCommand, Message>();
         CreateMap<AddChatSessionCommand, ChatSession>();
+
+        CreateMap<ForkMessageCommand, ChatSession>()
+            .ForMember(x => x.Messages,
+            opt => opt.MapFrom(src => new List<Message> { new Message(src.Content, src.IsFromUser, src.ForkedFromChatSessionId) }));
     }
 }

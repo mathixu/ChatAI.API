@@ -1,9 +1,8 @@
-﻿using ChatAI.Application.Accounts.Commands.AddOpenAIToken;
-using MediatR;
+﻿using MediatR;
 using ChatAI.Domain.Entities;
 using ChatAI.Application.Common.Interfaces;
 
-namespace ChatAI.Application.Accounts.Handlers;
+namespace ChatAI.Application.Accounts.Commands.AddOpenAIToken;
 
 public class AddOpenAITokenCommandHandler : IRequestHandler<AddOpenAITokenCommand>
 {
@@ -20,8 +19,8 @@ public class AddOpenAITokenCommandHandler : IRequestHandler<AddOpenAITokenComman
 
     public async Task Handle(AddOpenAITokenCommand request, CancellationToken cancellationToken)
     {
-        var userId = _currentUserService.GetCurrentUserId() ?? throw new UnauthorizedAccessException();
-        
+        var userId = _currentUserService.UserId ?? throw new UnauthorizedAccessException();
+
         var user = await _userRepository.Get(userId) ?? throw new UnauthorizedAccessException();
 
         user.OpenAIToken = _encryptionService.Encrypt(request.OpenAIToken);
