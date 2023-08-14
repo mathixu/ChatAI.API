@@ -3,6 +3,7 @@ using System;
 using ChatAI.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChatAI.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ChatAIDbContext))]
-    partial class ChatAIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230814122614_GPTModelAndSystem")]
+    partial class GPTModelAndSystem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,6 +43,7 @@ namespace ChatAI.Infrastructure.Persistence.Migrations
                         .HasColumnType("varchar(20)");
 
                     b.Property<string>("SystemInstruction")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Title")
