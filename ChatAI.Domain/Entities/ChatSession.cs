@@ -1,8 +1,12 @@
-﻿namespace ChatAI.Domain.Entities;
+﻿using ChatAI.Domain.Enums;
+
+namespace ChatAI.Domain.Entities;
 
 public class ChatSession : BaseAuditableEntity
 {
     public string? Title { get; set; }
+    public string? SystemInstruction { get; set; } = default!;
+    public GPTModel Model { get; set; }
 
     public List<Message> Messages { get; set; } = new();
 
@@ -12,8 +16,7 @@ public class ChatSession : BaseAuditableEntity
     public List<ChatSession> ForkedChatSessions { get; set; } = new();
     public Guid? ForkedFromChatSessionId { get; set; }
     public ChatSession? ForkedFromChatSession { get; set; }
-
-
+    
     public Guid UserId { get; set; }
     public User User { get; set; } = default!;
 }

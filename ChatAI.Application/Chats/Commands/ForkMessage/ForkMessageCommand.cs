@@ -8,6 +8,7 @@ public class ForkMessageCommand : IRequest<ChatSessionResponse>
 {
     public string Content { get; set; } = default!;
     public bool IsFromUser { get; set; }
+    public string Model { get; set; } = default!;
 
     [JsonIgnore]
     public Guid ForkedFromMessageId { get; set; }
@@ -25,5 +26,6 @@ public class ForkMessageCommand : IRequest<ChatSessionResponse>
         ForkedFromMessageId = messageId;
         Content = forkMessageCommand.Content;
         IsFromUser = forkMessageCommand.IsFromUser;
+        Model = forkMessageCommand.Model;
     }
 }

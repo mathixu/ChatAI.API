@@ -26,5 +26,14 @@ public class ChatSessionConfiguration : IEntityTypeConfiguration<ChatSession>
             .WithMany(cs => cs.ForkedChatSessions)
             .HasForeignKey(cs => cs.ForkedFromChatSessionId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.Property(e => e.Model)
+            .HasConversion<string>()
+            .HasMaxLength(20)
+            .IsRequired();
+
+        builder.Property(cs => cs.SystemInstruction)
+            .IsRequired(false);
+
     }
 }

@@ -13,6 +13,6 @@ public sealed class APIVersionController : ControllerBase
     [HttpGet]
     public IActionResult GetVersion()
     {
-        return Ok(new { version = "0.3.0" });
+        return Ok(new { version = "1.0.0" });
     }
 }
