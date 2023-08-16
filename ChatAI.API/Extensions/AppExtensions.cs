@@ -1,4 +1,5 @@
 ﻿using ChatAI.Infrastructure.Persistence;
+using Serilog;
 
 namespace ChatAI.API.Extensions;
 
@@ -6,6 +7,8 @@ public static class AppExtensions
 {
     public static async Task Configure(this WebApplication app)
     {
+        app.UseSerilogRequestLogging();
+
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();

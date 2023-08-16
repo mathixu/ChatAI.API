@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
 using ChatAI.Application.Common.Exceptions;
+using Serilog;
 
 namespace ChatAI.API.Filters;
 
@@ -40,6 +41,8 @@ public class ApiExceptionFilterAttribute : ExceptionFilterAttribute
 
     private void HandleUnknownException(ExceptionContext context)
     {
+        Log.Error(context.Exception, "Unknown error occured");
+
         var details = new ProblemDetails
         {
             Status = StatusCodes.Status500InternalServerError,
