@@ -9,6 +9,8 @@ using System.Text;
 using ChatAI.Infrastructure.Options;
 using ChatAI.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
+using Serilog;
+using Serilog.Events;
 
 namespace ChatAI.API.Extensions;
 
@@ -16,6 +18,7 @@ public static class BuilderExtensions
 {
     public static void Configure(this WebApplicationBuilder builder)
     {
+        builder.ConfigureLogger();
         builder.Services.ConfigureOptions();
         builder.Services.ConfigureAPI();
         builder.Services.ConfigureSwagger();
@@ -26,6 +29,25 @@ public static class BuilderExtensions
         builder.Services.AddApplicationServices();
         builder.Services.AddInfrastructureServices(builder.Configuration);
         builder.Services.ConfigureBearer();
+    }
+
+    private static void ConfigureLogger(this WebApplicationBuilder builder)
+    {
+        var seqSettings = builder.Configuration.GetSection("Logging:Seq");
+        var applicationName = builder.Configuration.GetValue<string>("Logging:ApplicationName") ?? throw new ArgumentException("invalid configuration");
+
+        var seqUrl = seqSettings.GetValue<string>("Url") ?? throw new ArgumentException("invalid configuration");
+        string? apiKey = seqSettings.GetValue<string>("ApiKey") ?? throw new ArgumentException("invalid configuration");
+        var minimumLogLevel = Enum.Parse<LogEventLevel>(
+            builder.Configuration.GetSection("Logging:LogLevel")["Default"] ?? throw new ArgumentException("invalid configuration"));
+
+        Log.Logger = new LoggerConfiguration()
+            .Enrich.WithProperty("Application", applicationName)
+            .MinimumLevel.Is(minimumLogLevel)
+            .WriteTo.Seq(seqUrl, apiKey: apiKey)
+            .CreateLogger();
+
+        builder.Host.UseSerilog();
     }
 
     private static void ConfigureAPI(this IServiceCollection services)
