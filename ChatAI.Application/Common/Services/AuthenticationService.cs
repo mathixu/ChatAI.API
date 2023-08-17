@@ -31,8 +31,6 @@ public class AuthenticationService : IAuthenticationService
         userResponse.AccessToken = _jwtProvider.Generate(user, JwtType.AccessToken);
         userResponse.RefreshToken = refreshToken.Token;
 
-        await _refreshTokenProvider.RevokeAllExpired(user);
-
         if (userResponse.OpenAIToken is not null)
         {
             userResponse.OpenAIToken = _encryptionService.Decrypt(userResponse.OpenAIToken);
