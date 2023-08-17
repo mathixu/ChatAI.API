@@ -27,7 +27,7 @@ public class ForkMessageCommandHandler : IRequestHandler<ForkMessageCommand, Cha
         var chatSession = await _chatSessionRepository.Get(cs => cs.Id == request.ForkedFromChatSessionId && cs.UserId == currentUserId, new List<string> { "Messages" })
             ?? throw new NotFoundException(nameof(ChatSession), request.ForkedFromChatSessionId);
 
-        if (!chatSession.Messages.Any(m => m.Id == request.ForkedFromMessageId && m.IsFromUser))
+        if (!chatSession.Messages.Any(m => m.Id == request.ForkedFromMessageId))
         {
             throw new NotFoundException(nameof(Message), request.ForkedFromMessageId);
         }
